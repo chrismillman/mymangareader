@@ -36,19 +36,6 @@ let allSeries = ["One-Piece", "Boku-no-Hero-Academia", "Onepunch-Man", "Shokugek
 let bodyParser = require('body-parser');
 let urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-scraper.scrapeNewest(idData);
-setInterval(getNewestChapters, SIX_HOURS);
-function getNewestChapters() {
-  console.log("Updating newest chapters...");
-  scraper.scrapeNewest(idData);
-}
-//store.uploadUser({name: "chris", series: idData});
-//store.downloadUser("newUser");
-//store.downloadSeriesIndex("Horimiya");
-queue.addChaptersIfNeeded(idData);
-
-// todo - be able to grab all series from seriesIndex
-//scraper.scrapeAllChapters("Wa");
 
 app.use(express.static(__dirname + '/public'));
 
@@ -120,3 +107,22 @@ app.listen(port, (err) => {
   }
   console.log('mymangareader listening on port 9000')
 });
+
+// Functions on start up and updating series
+startUp();
+async function startUp() {
+  let seriesIndex = await store.downloadSeriesIndex();
+  scraper.scrapeNewest(seriesIndex);
+  setInterval(getNewestChapters, SIX_HOURS);
+  async function getNewestChapters() {
+    console.log("Updating newest chapters...");
+    seriesIndex = await store.downloadSeriesIndex();
+    scraper.scrapeNewest(seriesIndex);
+  }
+  //store.uploadUser({name: "chris", series: idData});
+  //store.downloadUser("newUser");
+  queue.addChaptersIfNeeded(idData);
+  
+  // todo - be able to grab all series from seriesIndex
+  //scraper.scrapeAllChapters("Wa");  
+}

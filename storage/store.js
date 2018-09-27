@@ -100,37 +100,6 @@ function uploadChapter (obj) {
       console.error('Error - addChaptersIfNeeded:', err);
     });
 }
-async function seriesLatest (series) {
-  let value = null;
-  const taskKey = datastore.key(["seriesIndex", series]);
-  let entity = await datastore.get(taskKey).then((results) => {
-    if (results[0] !== undefined) {
-      //console.log(`user_id: ${user_id} Already Exists`);
-      value = results[0].latestChapter;
-    }
-  });
-  return value;
-}
-async function updateLatestChapter (series, latest) {
-  const taskKey = datastore.key(["seriesIndex", series]);
-
-  const entity = {
-    key: taskKey,
-    data: {
-      latestChapter: latest,
-    },
-  };
-
-  // Saves the entity
-  datastore
-    .save(entity)
-    .then(() => {
-      //console.log(`Saved user: ${obj.name}`);
-    })
-    .catch(err => {
-      console.error('Error - updateLatestChapter:', err);
-    });
-}
 async function downloadChapters (list) {
   let retrievedList = [];
   for (const obj of list){
@@ -154,32 +123,55 @@ async function downloadChapters (list) {
 
 
 // INDEX FUNCTIONALITY
-async function downloadSeriesIndex (seriesName) {
-  console.log("downloading index...");
-  const taskKey = datastore.key(["seriesIndex", 'default']);
-  let entity = null;
+async function seriesLatest (series) {
+  let value = null;
+  const taskKey = datastore.key(["seriesIndex", series]);
+  let entity = await datastore.get(taskKey).then((results) => {
+    if (results[0] !== undefined) {
+      //console.log(`user_id: ${user_id} Already Exists`);
+      value = results[0].latestChapter;
+    }
+  });
+  return value;
+}
+async function updateLatestChapter (series, latest) {
+  const taskKey = datastore.key(["seriesIndex", series]);
 
-  const query = datastore
-    .createQuery('seriesIndex').select('name');
+  const entity = {
+    key: taskKey,
+    data: {
+      name: series,
+      latestChapter: latest
+    },
+  };
 
-  // Gets the entity
-  /*
-  await datastore
-    .get(taskKey)
-    .then((results) => {
-      entity = results[0];
-      console.log(`Received: ${entity}`);
+  // Saves the entity
+  datastore
+    .save(entity)
+    .then(() => {
+      //console.log(`Saved user: ${obj.name}`);
     })
     .catch(err => {
-      console.error('ERROR:', err);
+      console.error('Error - updateLatestChapter:', err);
     });
-    */
+}
+async function downloadSeriesIndex () {
+  console.log("downloading index...");
+  let seriesList = [];
+
+  const query = datastore
+    .createQuery('seriesIndex');
+
   await datastore.runQuery(query).then(results => {
     const entity = results[0];
-    console.log('Tasks:');
-    entity.forEach(task => console.log(JSON.stringify(task)));
+    for (const series of entity) {
+      seriesList.push({name: series.name, latestChapter: series.latestChapter});
+    }
+  })
+  .catch(err => {
+    console.error('Error - downloadSeriesIndex:', err);
   });
-  return entity;
+  return seriesList;
 }
 
 
