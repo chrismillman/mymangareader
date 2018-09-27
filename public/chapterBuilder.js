@@ -24,9 +24,11 @@ function initAccordion(accordionElem) {
     showPanel(event.currentTarget);
   }
 
-  function showPanel(panel) {
+  async function showPanel(panel) {
     let expandedPanels = accordionElem.querySelectorAll(".active");
     let found = false;
+
+    await panel.scrollIntoView({ block: 'start', behavior: 'smooth'});
 
     for (let i=0; i < expandedPanels.length; i++) {
       if (expandedPanels[i] === panel) {
@@ -37,8 +39,6 @@ function initAccordion(accordionElem) {
     if (found === false) {
       panel.classList.add("active");
     }
-
-    panel.scrollIntoView({ block: 'start', behavior: 'smooth'});
   }
 
   let allPanelElems = accordionElem.querySelectorAll(".panel");
