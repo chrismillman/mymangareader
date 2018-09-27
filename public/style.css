@@ -1,0 +1,137 @@
+html {
+  font-family: sans-serif;
+}
+
+h3 {
+  padding-left: 10px;
+}
+
+h4 {
+  margin: 0;
+}
+
+body {
+  background-color: black;
+  color: white;
+  margin: auto;
+  width: 800px;
+}
+
+header {
+  border-radius: 5px;
+  background-color: green;
+  color: white;
+  line-height: 70px;
+  padding: 0 20px;
+}
+
+footer {
+  border-radius: 5px;
+  background-color: green;
+  color: white;
+  line-height: 40px;
+  padding: 0 20px;
+}
+
+img {
+  max-width: 760px;
+  min-width: 200px;
+  height: auto;
+  padding-bottom: 5px;
+}
+
+#add-series {
+  float: right;
+}
+
+#input-series {
+  display: inline-block;
+  width: 100px;
+}
+
+#series-text {
+  display: inline-block;
+  width: 135px;
+}
+
+#series-display {
+  padding-left: 10px;
+  padding-bottom: 5px;
+}
+
+#chapter-area {
+  background: #4e4e4e;
+  border-radius: 10px;
+  padding-left: 20px;
+  padding-top: 5px;
+  padding-right: 20px;
+  padding-bottom: 5px;
+}
+
+#accordion {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#images {
+  display: none;
+  padding-bottom: 10px;
+}
+
+.series-input {
+  background-color: #606060;
+  color: white;
+}
+
+.panel {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.active #images, .active .buttons{
+  display : block;
+}
+
+.active h3 {
+  margin-bottom: 0px;
+}
+
+.active.panel {
+  padding-bottom: 40px;
+}
+
+.panel:hover {
+  background-color: #606060;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.buttons{
+  display: none;
+  padding-left: 10px;
+}
+
+.remove, .previous, .next {
+  height: 35px;
+  width: 35px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.remove {
+  float: right;
+  color: #EF5350;
+}
+
+.previous, .next{
+  float: left;
+  color: green;
+}
+
+.remove:hover, .previous:hover, .next:hover {
+  background: #4e4e4e;
+  border-radius: 5px;
+}

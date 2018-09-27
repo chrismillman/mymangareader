@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My Manga Reader</title>
+    <link href="style.css" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <form id="add-series-form" action="/add-series" method="post" onsubmit="return resetForm()">
+        <div id="add-series">
+          Add Series:
+          <input name="series_input" id="series-input" type="text"></input>
+        </div>
+      </form>
+      <h1>My Manga Reader</h1>
+    </header>
+
+    <main>
+      <form id="area" method="post">
+        <div id="series-display">
+        </div>
+        <section id="chapter-area">
+        </section>
+      </form>
+    </main>
+
+    <footer>
+      <p>&nbsp</p>
+    </footer>
+  </body>
+  <script src="chapterBuilder.js" defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script>
+    let inputArea = document.getElementById("series-input");
+    inputArea.style.borderColor = "#4d4d4d";
+    inputArea.style.backgroundColor = "#606060";
+    inputArea.style.color = "white";
+    function resetForm() {
+      document.getElementById("add-series-form").reset();
+    }
+  </script>
+</html>
