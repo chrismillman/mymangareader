@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "my-manga-reader-1",
+  "private_key_id": "541c918694cdb6fde27968945f4746c683ce86c0",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCVBFTYJaS1IS4f\n93fizx1EWbqGiPsqrJtuTuFtuLOwc39Leb0cPstdvlniOSkp4fzwdVkj7L9TZm8H\ndzQVLzvTHSVNN++W9EV85AXmYlG1LKlNppbZJ64KJOq3WwGhmECJuRC/dIdY9CRk\nr09ibcR2i4sAjyNGplw5dy1OvgqUOonk89+3A7MRarO3ukH62o5c9YYTSaaZF2OM\ny9mseFIqOVgPxIPCUJRhkHywhtQRe0w4osRVGYb9HwPD3hbQ/gXROs0cTmHtJpIl\nyxVhy0Yw6b9p1v5Vsq6kG8ztAWKFnfQZ68K4kZD4XrWhrqQ/VeQYOP81mTieVspf\ndCtDCNgDAgMBAAECggEARS3AF6IOHzpal+OCJ+yfuSHwulEwTOTZuXFsLMxAuws7\nTrYi6VBrh8b9Ik0IA5YSnyzTJ57aSWT16WDY8Ha/jqfqr7jmhM08zxhqdsQxC2tC\n47YRNJm7raDqyBk7HiI439bm5AK8bLrWhFlwgJDV0nTAoI9SwJMtoE3n3jTSY3I+\nReMXGuuWJpnAot2EYc8cbmPuXAkwfcpdY/yBYrLFW2HHJt4Py3HCv5/lHW3nsLEW\nHavWFM/JWTtY7HU+RM4+1Jihc29JkIheS20p2LKgSYp7i5hNJsqZGpR+Y/lvo01S\nw2nPFf2J4HMGG+rPo/VuqOBohSfZJyfuBBDspwTXJQKBgQDDs8pun2r8L6oq1whL\n4AzQD497e+ZPJDghOlsI+eF26J86qrjQisNf+L+k07iWLDHC54ePzdEqdccRjR2a\n9O3wLw46L1NJ5POHu6X2OBycXvy3OvdXqfuvlsanfyOpIQ5/O9Mzw/SgEX4vitFz\nzCnXlZ75l+9AtJcK/ot84SWK3QKBgQDC7i94fPylWE0z1WxGxyp3dEPpNlQ6t77o\nrGYGZmWQsSC53paK53fhn1SlhGe2fyCTzICAomCyyIGXXdsWfP+Ox4AJ9ShSEiu9\nEXNVlD67jk+NzzrbAKaNLiSq6dbYNlhmwT0TjJ652O5k67ZMSlqUK72U3klh8gt3\nVel2PRaQXwKBgHyA/4KNTWUPdfU3RIHxEnWz0JbA5m7nHgaVt6DoSHZ73AFY56dV\nAKMn/9R/FeoER8w1vFrSmAWpVHJoErOoq0+owCZoQVa7n+t0iEsyu5EIJUL08rME\n46h8Bfo9upQ5AZ4Uk3NVcWX8ewkICeTfuKb8+1zTOlUyDv3hnyBdpKLJAoGAf0LF\nVyIyRzhI3sg9MlAg12/eTkkb4GHJj1nOGeuL71TUisRZAEJxr6k3t/+jPi/s8tEW\nK+TWwKHKiSnLOPlOVsbEPrwBIOOgDoVwCLUJ56TXJzvdrtDT62PuqG6Vxv5j5GHQ\nIA00Kx0HNnf0wgXg8M9FrAUbX4iIF9bM3lavfn0CgYARMbRW3wnq19GBKzViy3wn\n4iofqLXp3ro+gwJOpqw1OBZlsc/oKMa/1RvT+rP6ccJhyz8ytufVK7hH34sI7EvY\nTaLdQ+trso3bBLCIQ1A/hYVAuwLByZHFOAeMwPAUGgAtAXfgKWKO11/bHS9FcDhq\nE41LwhsN2JSGoPgCxXXEEQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "chris-millman@my-manga-reader-1.iam.gserviceaccount.com",
+  "client_id": "112970240710647307169",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/chris-millman%40my-manga-reader-1.iam.gserviceaccount.com"
+}
