@@ -112,7 +112,7 @@ app.listen(port, (err) => {
 startUp();
 async function startUp() {
   let seriesIndex = await store.downloadSeriesIndex();
-  scraper.scrapeNewest(seriesIndex);
+  //scraper.scrapeNewest(seriesIndex);
   setInterval(getNewestChapters, SIX_HOURS);
   async function getNewestChapters() {
     console.log("Updating newest chapters...");
@@ -122,7 +122,7 @@ async function startUp() {
   //store.uploadUser({name: "chris", series: idData});
   //store.downloadUser("newUser");
   queue.addChaptersIfNeeded(idData);
-  
+  store.uploadSeriesIndex("Nichijou");
   // todo - be able to grab all series from seriesIndex
   //scraper.scrapeAllChapters("Wa");  
 }

@@ -155,7 +155,27 @@ async function updateLatestChapter (series, latest) {
       console.error('Error - updateLatestChapter:', err);
     });
 }
-async function downloadSeriesIndex () {
+async function uploadSeriesIndex(series) {
+  const taskKey = datastore.key(["seriesIndex", series]);
+
+  const entity = {
+    key: taskKey,
+    data: {
+      name: series,
+      latestChapter: 0
+    }
+  }
+
+  datastore
+    .save(entity)
+    .then(() => {
+      //console.log(`Uploaded series: ${series} to seriesIndex`);
+    })
+    .catch(err => {
+      console.error('Error - uploadSeriesIndex', err);
+    });
+}
+async function downloadSeriesIndex() {
   console.log("downloading index...");
   let seriesList = [];
 
@@ -180,8 +200,9 @@ exports.userExists = userExists;
 exports.uploadUser = uploadUser;
 exports.downloadUser = downloadUser;
 exports.seriesExists = seriesExists;
-exports.seriesLatest = seriesLatest;
 exports.uploadChapter = uploadChapter;
-exports.updateLatestChapter = updateLatestChapter;
 exports.downloadChapters = downloadChapters;
+exports.seriesLatest = seriesLatest;
+exports.updateLatestChapter = updateLatestChapter;
+exports.uploadSeriesIndex = uploadSeriesIndex;
 exports.downloadSeriesIndex = downloadSeriesIndex;
