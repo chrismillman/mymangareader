@@ -18,6 +18,8 @@ Installing base dependencies, google cloud dependencies require administrative a
 npm install --admin
 ```
 
+*You will also need to add your keyfile.json file to mymangareader/storage for it to connect to your google cloud storage
+
 ## Running the tests
 
 Explain how to run the automated tests for this system
