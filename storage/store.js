@@ -62,6 +62,19 @@ async function downloadUser (user_id) {
     });
   return entity.series;
 }
+async function addUserSeries (user_id, series) {
+  let userList = await downloadUser(user_id);
+  let found = false;
+  for (item of userList) {
+    if (item.name === series) {
+      found = true;
+    }
+  }
+  if (found === false) {
+    userList.push({name: series, number: 0});
+  }
+  uploadUser({name: user_id, series: userList});
+}
 
 
 // SERIES FUNCTIONALITY
@@ -199,6 +212,7 @@ exports.__esModule = true;
 exports.userExists = userExists;
 exports.uploadUser = uploadUser;
 exports.downloadUser = downloadUser;
+exports.addUserSeries = addUserSeries;
 exports.seriesExists = seriesExists;
 exports.uploadChapter = uploadChapter;
 exports.downloadChapters = downloadChapters;

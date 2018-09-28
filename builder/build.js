@@ -5,7 +5,6 @@ const store = require('../storage/store');
 const queue = require('../queue/job-queue');
 
 async function buildView (user_id, cb) {
-  let chapterList = [];
   let value = await store.userExists(user_id);
   if (value === true){
     // Get user's list of series from database

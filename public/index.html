@@ -33,16 +33,4 @@
   </body>
   <script src="chapterBuilder.js" defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script>
-    $(function() {
-      $('#add-series-form').submit(function(event) {
-        event.preventDefault();
-        let data = document.getElementById('series-input').value;
-        $.post('/add-series/'+user_id+'/'+data, function(res) {
-          let val = res;
-        });
-        document.getElementById("add-series-form").reset();
-      });
-    });
-  </script>
 </html>
