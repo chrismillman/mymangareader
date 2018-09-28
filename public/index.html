@@ -39,6 +39,7 @@
         event.preventDefault();
         let data = document.getElementById('series-input').value;
         $.post('/add-series/'+user_id+'/'+data, function(res) {
+          let val = res;
         });
         document.getElementById("add-series-form").reset();
       });

@@ -88,7 +88,7 @@ app.post('/add-series/:name/:data', urlencodedParser, function(req, res) {
   let user_id = req.params.name;
   console.log("hello " + user_id);
   //console.log("adding series " + req.body.series_input + "...");
-  res.status(200);
+  res.status(200).send("hi");
 });
 
 app.post('/', function(req, res) {
