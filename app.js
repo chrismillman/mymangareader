@@ -82,16 +82,11 @@ app.get('/next/:name/:series', function(req, res) {
   });
 });
 
-app.get('/add-series', urlencodedParser, function(req, res) {
+app.post('/add-series/:name/:data', urlencodedParser, function(req, res) {
   console.log("adding series...");
-  console.log("got: " + req.body.series_input);
-  //console.log("adding series " + req.body.series_input + "...");
-  res.status(200);
-});
-
-app.post('/add-series', urlencodedParser, function(req, res) {
-  console.log("adding series...");
-  console.log("got: " + req.body.series_input);
+  console.log("got: " + req.params.data);
+  let user_id = req.params.name;
+  console.log("hello " + user_id);
   //console.log("adding series " + req.body.series_input + "...");
   res.status(200);
 });
@@ -122,7 +117,7 @@ async function startUp() {
   //store.uploadUser({name: "chris", series: idData});
   //store.downloadUser("newUser");
   queue.addChaptersIfNeeded(idData);
-  store.uploadSeriesIndex("Nichijou");
+  //store.uploadSeriesIndex("Nichijou");
   // todo - be able to grab all series from seriesIndex
   //scraper.scrapeAllChapters("Wa");  
 }

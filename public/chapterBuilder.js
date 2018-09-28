@@ -1,5 +1,5 @@
 let myData = null;
-let user_id = "chris";
+const user_id = "chris";
 // Send a request to the server with your google id
 const requestURL = '/user/' + user_id;
 let request = new XMLHttpRequest();
@@ -13,9 +13,15 @@ request.onload = function() {
 }
 
 async function buildPage(myData){
+  initHeader();
   //appendSeriesList(myData);
   appendChapters(myData);
   await initAccordion(document.getElementById("accordion"));
+}
+
+function initHeader() {
+  //let form = document.getElementById("add-series-form");
+  //form.action = "/add-series/" + user_id;
 }
 
 function initAccordion(accordionElem) {
@@ -28,8 +34,6 @@ function initAccordion(accordionElem) {
     let expandedPanels = accordionElem.querySelectorAll(".active");
     let found = false;
 
-    await panel.scrollIntoView({ block: 'start', behavior: 'smooth'});
-
     for (let i=0; i < expandedPanels.length; i++) {
       if (expandedPanels[i] === panel) {
         expandedPanels[i].classList.remove("active");
@@ -39,6 +43,7 @@ function initAccordion(accordionElem) {
     if (found === false) {
       panel.classList.add("active");
     }
+    //await panel.scrollIntoView({ block: 'start', behavior: 'instant'});
   }
 
   let allPanelElems = accordionElem.querySelectorAll(".panel");
@@ -220,7 +225,6 @@ function removeSeriesFromPage(series) {
 }
 
 function addSeriesToPage(series, list) {
-  // todo - add images div to the series on the current page with the given list of images
   let chapterArea = document.getElementById(series);
 
   let images = document.createElement("div");

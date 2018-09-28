@@ -52,7 +52,7 @@ async function scrapeMyList (seriesList) {
         let imageURL = await image.$eval('img', img => img.src);
         if (imageURL === await page.url()) {
           console.log("PANIC!!!");
-          await sleep(3000);
+          await setTimeout(() => {},3000);
           imageURL = await image.$eval('img', img => img.src);
         }
         imageList.push(String(imageURL));
