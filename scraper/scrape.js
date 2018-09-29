@@ -49,13 +49,19 @@ async function scrapeMyList (seriesList) {
 
       // Get the url and add it to the series list
       for (let image of images) {
+        const sleep = (time) => {
+          return new Promise(resolve => setTimeout(resolve, time))
+        }
         let imageURL = await image.$eval('img', img => img.src);
         if (imageURL === await page.url()) {
           console.log("PANIC!!!");
-          await sleep(3000);
-          imageURL = await image.$eval('img', img => img.src);
+          await sleep(3000).then(async () => {
+            imageURL = await image.$eval('img', img => img.src);
+            imageList.push(String(imageURL));
+          });
+        } else {
+          imageList.push(String(imageURL));
         }
-        imageList.push(String(imageURL));
       }
       series.images = imageList;
       await store.uploadChapter(series);

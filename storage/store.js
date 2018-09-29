@@ -62,6 +62,19 @@ async function downloadUser (user_id) {
     });
   return entity.series;
 }
+async function addUserSeries (user_id, series) {
+  let userList = await downloadUser(user_id);
+  let found = false;
+  for (item of userList) {
+    if (item.name === series) {
+      found = true;
+    }
+  }
+  if (found === false) {
+    userList.push({name: series, number: 0});
+  }
+  uploadUser({name: user_id, series: userList});
+}
 
 
 // SERIES FUNCTIONALITY
@@ -155,7 +168,27 @@ async function updateLatestChapter (series, latest) {
       console.error('Error - updateLatestChapter:', err);
     });
 }
-async function downloadSeriesIndex () {
+async function uploadSeriesIndex(series) {
+  const taskKey = datastore.key(["seriesIndex", series]);
+
+  const entity = {
+    key: taskKey,
+    data: {
+      name: series,
+      latestChapter: 0
+    }
+  }
+
+  datastore
+    .save(entity)
+    .then(() => {
+      //console.log(`Uploaded series: ${series} to seriesIndex`);
+    })
+    .catch(err => {
+      console.error('Error - uploadSeriesIndex', err);
+    });
+}
+async function downloadSeriesIndex() {
   console.log("downloading index...");
   let seriesList = [];
 
@@ -179,9 +212,11 @@ exports.__esModule = true;
 exports.userExists = userExists;
 exports.uploadUser = uploadUser;
 exports.downloadUser = downloadUser;
+exports.addUserSeries = addUserSeries;
 exports.seriesExists = seriesExists;
-exports.seriesLatest = seriesLatest;
 exports.uploadChapter = uploadChapter;
-exports.updateLatestChapter = updateLatestChapter;
 exports.downloadChapters = downloadChapters;
+exports.seriesLatest = seriesLatest;
+exports.updateLatestChapter = updateLatestChapter;
+exports.uploadSeriesIndex = uploadSeriesIndex;
 exports.downloadSeriesIndex = downloadSeriesIndex;

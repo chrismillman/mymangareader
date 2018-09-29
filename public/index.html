@@ -7,7 +7,7 @@
   </head>
   <body>
     <header>
-      <form id="add-series-form" action="/add-series" method="post" onsubmit="return resetForm()">
+      <form id="add-series-form">
         <div id="add-series">
           Add Series:
           <input name="series_input" id="series-input" type="text">
@@ -31,13 +31,4 @@
   </body>
   <script src="chapterBuilder.js" defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script>
-    let inputArea = document.getElementById("series-input");
-    inputArea.style.borderColor = "#4d4d4d";
-    inputArea.style.backgroundColor = "#606060";
-    inputArea.style.color = "white";
-    function resetForm() {
-      document.getElementById("add-series-form").reset();
-    }
-  </script>
 </html>

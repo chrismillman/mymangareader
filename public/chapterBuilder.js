@@ -1,5 +1,5 @@
 let myData = null;
-let user_id = "chris";
+const user_id = "chris";
 // Send a request to the server with your google id
 const requestURL = '/user/' + user_id;
 let request = new XMLHttpRequest();
@@ -12,39 +12,46 @@ request.onload = function() {
   buildPage(myData);
 }
 
+$('#add-series-form').submit(function(event) {
+  event.preventDefault();
+  let data = document.getElementById('series-input').value;
+  $.post('/add-series/'+user_id+'/'+data, function(res) {
+    console.log(res);
+    addNewSeries(res);
+  });
+  document.getElementById("add-series-form").reset();
+});
+
 async function buildPage(myData){
   //appendSeriesList(myData);
   appendChapters(myData);
-  await initAccordion(document.getElementById("accordion"));
-}
-
-function initAccordion(accordionElem) {
-
-  function handlePanelClick(event) {
-    showPanel(event.currentTarget);
-  }
-
-  async function showPanel(panel) {
-    let expandedPanels = accordionElem.querySelectorAll(".active");
-    let found = false;
-
-    await panel.scrollIntoView({ block: 'start', behavior: 'smooth'});
-
-    for (let i=0; i < expandedPanels.length; i++) {
-      if (expandedPanels[i] === panel) {
-        expandedPanels[i].classList.remove("active");
-        found = true;
-      }
-    }
-    if (found === false) {
-      panel.classList.add("active");
-    }
-  }
-
+  //showPanel(document.getElementById("accordion"));
+  let accordionElem = document.getElementById("accordion")
   let allPanelElems = accordionElem.querySelectorAll(".panel");
   for (let i=0; i < allPanelElems.length; i++) {
     allPanelElems[i].addEventListener("click", handlePanelClick);
   }
+}
+
+function handlePanelClick(event) {
+  showPanel(event.currentTarget);
+}
+
+async function showPanel(panel) {
+  let accordionElem = document.getElementById("accordion")
+  let expandedPanels = accordionElem.querySelectorAll(".active");
+  let found = false;
+
+  for (let i=0; i < expandedPanels.length; i++) {
+    if (expandedPanels[i] === panel) {
+      expandedPanels[i].classList.remove("active");
+      found = true;
+    }
+  }
+  if (found === false) {
+    panel.classList.add("active");
+  }
+  //await panel.scrollIntoView({ block: 'start', behavior: 'instant'});
 }
 
 async function appendSeriesList(myData) {
@@ -72,7 +79,6 @@ function handleRemoveClick(event) {
 
   let panel = event.currentTarget.parentElement.parentElement;
 
-  console.log("trying to remove....");
   const removeURL = "/remove/" + user_id + '/' + panel.id;
   let request = new XMLHttpRequest();
   request.open('GET', removeURL);
@@ -82,8 +88,6 @@ function handleRemoveClick(event) {
   }
   let accordion = document.getElementById("accordion");
   accordion.removeChild(panel);
-  console.log("removing " + panel.id + "...");
-  panel.scrollIntoView({ block: 'start', behavior: 'instant'});
 }
 
 function handlePreviousClick(event) {
@@ -220,7 +224,6 @@ function removeSeriesFromPage(series) {
 }
 
 function addSeriesToPage(series, list) {
-  // todo - add images div to the series on the current page with the given list of images
   let chapterArea = document.getElementById(series);
 
   let images = document.createElement("div");
@@ -261,4 +264,95 @@ function addSeriesToPage(series, list) {
 
   chapterArea.appendChild(images);
   chapterArea.appendChild(buttonsBottom);
+}
+
+function addNewSeries(obj) {
+  let accordionArea = document.getElementById("accordion");
+
+  // Adding Chapter Pages
+  let newChapter = document.createElement("div");
+  newChapter.classList.add("panel");
+  newChapter.addEventListener("click", handlePanelClick);
+  newChapter.id = obj.name;
+
+  // Top Buttons
+  let buttonsTop = document.createElement("div");
+  buttonsTop.classList.add("buttons");
+
+  let removeTop = document.createElement("div");
+  removeTop.classList.add("remove");
+  let xTop = document.createTextNode("x");
+  removeTop.appendChild(xTop);
+  removeTop.addEventListener("click", handleRemoveClick);
+
+  let previousTop = document.createElement("div");
+  previousTop.classList.add("previous");
+  let leftTop = document.createTextNode("<");
+  previousTop.appendChild(leftTop);
+  previousTop.addEventListener("click", handlePreviousClick);
+
+  let nextTop = document.createElement("div");
+  nextTop.classList.add("next");
+  let rightTop = document.createTextNode(">");
+  nextTop.appendChild(rightTop);
+  nextTop.addEventListener("click", handleNextClick);
+
+  // Bottom Buttons
+  let buttonsBottom = document.createElement("div");
+  buttonsBottom.classList.add("buttons");
+
+  let removeBottom = document.createElement("div");
+  removeBottom.classList.add("remove");
+  let xBottom = document.createTextNode("x");
+  removeBottom.appendChild(xBottom);
+  removeBottom.addEventListener("click", handleRemoveClick);
+
+  let previousBottom = document.createElement("div");
+  previousBottom.classList.add("previous");
+  let leftBottom = document.createTextNode("<");
+  previousBottom.appendChild(leftBottom);
+  previousBottom.addEventListener("click", handlePreviousClick);
+
+  let nextBottom = document.createElement("div");
+  nextBottom.classList.add("next");
+  let rightBottom = document.createTextNode(">");
+  nextBottom.appendChild(rightBottom);
+  nextBottom.addEventListener("click", handleNextClick);
+
+  let h3 = document.createElement("h3");
+  let chapterText = document.createTextNode(obj.name);
+  h3.appendChild(chapterText);
+  newChapter.appendChild(h3);
+
+  // Add Images
+  let images = document.createElement("div");
+  images.id = "images";
+  buttonsTop.appendChild(previousTop);
+  buttonsTop.appendChild(nextTop);
+  buttonsTop.appendChild(removeTop);
+  newChapter.appendChild(buttonsTop);
+  for (let i=0; i < obj.images.length; i++) {
+    let src = obj.images[i];
+    img = document.createElement('img');
+    img.src = src;
+
+    images.appendChild(img);
+  }
+  buttonsBottom.appendChild(previousBottom);
+  buttonsBottom.appendChild(nextBottom);
+  buttonsBottom.appendChild(removeBottom);
+  newChapter.appendChild(images);
+  newChapter.appendChild(buttonsBottom);
+  
+  for (let i=0; i < accordionArea.childNodes.length; i++) {
+    if (accordionArea.childNodes[i].id === obj.name) {
+      break;
+    } else if (accordionArea.childNodes[i].id > obj.name) {
+      accordionArea.insertBefore(newChapter, accordionArea.childNodes[i]);
+      break;
+    }
+    if (i === accordionArea.childNodes.length-1) {
+      accordionArea.appendChild(newChapter);
+    }
+  }
 }

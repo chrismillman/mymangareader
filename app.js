@@ -60,7 +60,7 @@ app.get('/remove/:name/:series', function(req, res) {
   //console.log(`remove request for ${user_id}...`);
   let series = req.params.series;
   builder.removeChapter(user_id, series, () => {
-    res.status(200);
+    res.status(200).send("removed");
   });
 });
 
@@ -82,23 +82,13 @@ app.get('/next/:name/:series', function(req, res) {
   });
 });
 
-app.get('/add-series', urlencodedParser, function(req, res) {
-  console.log("adding series...");
-  console.log("got: " + req.body.series_input);
-  //console.log("adding series " + req.body.series_input + "...");
-  res.status(200);
-});
-
-app.post('/add-series', urlencodedParser, function(req, res) {
-  console.log("adding series...");
-  console.log("got: " + req.body.series_input);
-  //console.log("adding series " + req.body.series_input + "...");
-  res.status(200);
-});
-
-app.post('/', function(req, res) {
-  console.log("Hello!");
-  res.status(200).send("Hello from server!");
+app.post('/add-series/:name/:data', urlencodedParser, async function(req, res) {
+  let user_id = req.params.name;
+  let data = req.params.data;
+  store.addUserSeries(user_id, data);
+  await queue.addChaptersIfNeeded([{name: data, number: 0}]);
+  let chapterList = await store.downloadChapters([{name: data, number: 0}]);
+  res.status(200).send({name: data, images: chapterList[0].images});
 });
 
 app.listen(port, (err) => {
@@ -122,7 +112,7 @@ async function startUp() {
   //store.uploadUser({name: "chris", series: idData});
   //store.downloadUser("newUser");
   queue.addChaptersIfNeeded(idData);
-  
+  //store.uploadSeriesIndex("Nichijou");
   // todo - be able to grab all series from seriesIndex
   //scraper.scrapeAllChapters("Wa");  
 }
