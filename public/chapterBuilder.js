@@ -16,7 +16,6 @@ $('#add-series-form').submit(function(event) {
   event.preventDefault();
   let data = document.getElementById('series-input').value;
   $.post('/add-series/'+user_id+'/'+data, function(res) {
-    console.log(res);
     addNewSeries(res);
   });
   document.getElementById("add-series-form").reset();
@@ -76,18 +75,21 @@ async function appendSeriesList(myData) {
 
 function handleRemoveClick(event) {
   event.stopPropagation();
-
+  
   let panel = event.currentTarget.parentElement.parentElement;
+  let check = confirm(`Are you sure you want to remove ${panel.id}?`);
 
-  const removeURL = "/remove/" + user_id + '/' + panel.id;
-  let request = new XMLHttpRequest();
-  request.open('GET', removeURL);
-  request.send();
+  if (check === true) {
+    const removeURL = "/remove/" + user_id + '/' + panel.id;
+    let request = new XMLHttpRequest();
+    request.open('GET', removeURL);
+    request.send();
 
-  request.onload = function() {
+    request.onload = function() {
+    }
+    let accordion = document.getElementById("accordion");
+    accordion.removeChild(panel);
   }
-  let accordion = document.getElementById("accordion");
-  accordion.removeChild(panel);
 }
 
 function handlePreviousClick(event) {
