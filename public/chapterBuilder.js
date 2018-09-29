@@ -16,6 +16,7 @@ $('#add-series-form').submit(function(event) {
   event.preventDefault();
   let data = document.getElementById('series-input').value;
   $.post('/add-series/'+user_id+'/'+data, function(res) {
+    console.log(res);
     addNewSeries(res);
   });
   document.getElementById("add-series-form").reset();
@@ -24,35 +25,33 @@ $('#add-series-form').submit(function(event) {
 async function buildPage(myData){
   //appendSeriesList(myData);
   appendChapters(myData);
-  await initPanels(document.getElementById("accordion"));
-}
-
-function initPanels(accordionElem) {
-
-  function handlePanelClick(event) {
-    showPanel(event.currentTarget);
-  }
-
-  async function showPanel(panel) {
-    let expandedPanels = accordionElem.querySelectorAll(".active");
-    let found = false;
-
-    for (let i=0; i < expandedPanels.length; i++) {
-      if (expandedPanels[i] === panel) {
-        expandedPanels[i].classList.remove("active");
-        found = true;
-      }
-    }
-    if (found === false) {
-      panel.classList.add("active");
-    }
-    //await panel.scrollIntoView({ block: 'start', behavior: 'instant'});
-  }
-
+  //showPanel(document.getElementById("accordion"));
+  let accordionElem = document.getElementById("accordion")
   let allPanelElems = accordionElem.querySelectorAll(".panel");
   for (let i=0; i < allPanelElems.length; i++) {
     allPanelElems[i].addEventListener("click", handlePanelClick);
   }
+}
+
+function handlePanelClick(event) {
+  showPanel(event.currentTarget);
+}
+
+async function showPanel(panel) {
+  let accordionElem = document.getElementById("accordion")
+  let expandedPanels = accordionElem.querySelectorAll(".active");
+  let found = false;
+
+  for (let i=0; i < expandedPanels.length; i++) {
+    if (expandedPanels[i] === panel) {
+      expandedPanels[i].classList.remove("active");
+      found = true;
+    }
+  }
+  if (found === false) {
+    panel.classList.add("active");
+  }
+  //await panel.scrollIntoView({ block: 'start', behavior: 'instant'});
 }
 
 async function appendSeriesList(myData) {
@@ -273,6 +272,7 @@ function addNewSeries(obj) {
   // Adding Chapter Pages
   let newChapter = document.createElement("div");
   newChapter.classList.add("panel");
+  newChapter.addEventListener("click", handlePanelClick);
   newChapter.id = obj.name;
 
   // Top Buttons
@@ -355,5 +355,4 @@ function addNewSeries(obj) {
       accordionArea.appendChild(newChapter);
     }
   }
-  initPanels(document.getElementById("accordion"));
 }
