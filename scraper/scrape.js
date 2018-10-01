@@ -18,7 +18,7 @@ async function scrapeMyList (seriesList) {
     for (const series of seriesList) {
       let imageList = [];
       await page.goto(pageBase + series.name);
-      console.log(`scraping ${series.name}`);
+      //console.log(`scraping ${series.name}`);
 
       let chapterNumbers = '#leftside > div:nth-child(4) > div.barContent.chapterList > div:nth-child(2) > table > tbody > tr';
 
@@ -54,7 +54,6 @@ async function scrapeMyList (seriesList) {
         }
         let imageURL = await image.$eval('img', img => img.src);
         if (imageURL === await page.url()) {
-          console.log("PANIC!!!");
           await sleep(3000).then(async () => {
             imageURL = await image.$eval('img', img => img.src);
             imageList.push(String(imageURL));

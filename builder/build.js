@@ -35,9 +35,6 @@ async function removeChapter (user_id, series, cb) {
 }
 
 async function previousChapter (user_id, series, cb) {
-  // todo - if the series can't be decremented as it is the first chapter, don't do the rest
-  //   ^ should that be an int status value in the chapter object?
-  //      -1 = first chapter, 0 = middle chapter, 1 = latest chapter
   let value = await store.userExists(user_id);
   if (value === true){
     // Get user's list of series from database
@@ -45,7 +42,6 @@ async function previousChapter (user_id, series, cb) {
     let chapter = null;
     // Update user's chapter
 
-    // todo - Set a high number based on the index latest chapter
     for (const obj of list) {
       if (obj.name === series && obj.number > 0) {
         if (await store.seriesExists({name: obj.name, number: obj.number-1})) {

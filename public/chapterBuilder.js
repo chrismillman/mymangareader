@@ -130,15 +130,24 @@ async function handleNextClick(event) {
   }
 }
 
+function handleSelectClick(event) {
+  event.stopPropagation();
+  if (event.detail === 0) {
+    let select = event.currentTarget;
+    console.log(`You chose: ${select.options[select.selectedIndex].value}`);
+  }
+}
+
 async function appendChapters(myData) {
   if (myData === []) {
     return;
   }
+  let userData = myData.userdata;
   let chapterArea = document.getElementById('chapter-area');
   let accordion = document.createElement('div');
   accordion.id = "accordion";
   chapterArea.appendChild(accordion);
-  for (const series of myData) {
+  for (const series of myData.chapters) {
     // Adding Chapter Pages
     let div1 = document.createElement("div");
     div1.classList.add("panel");
@@ -165,6 +174,22 @@ async function appendChapters(myData) {
     let rightTop = document.createTextNode(">");
     nextTop.appendChild(rightTop);
     nextTop.addEventListener("click", handleNextClick);
+
+
+    // ALSO ADD THIS TO THE DYNAMICALLY ADDED SERIES BELOW
+    let select = document.createElement("select");
+    select.classList.add("select");
+    if (userData) {
+      for (let i=0; i < userData.length; i++) {
+        if (userData[i].name === series.name) {
+          let item = new Option(userData[i].number, i);
+          select.options.add(item);
+        }
+      }
+    }
+
+
+    select.addEventListener("click", handleSelectClick);
 
     // Bottom Buttons
     let buttonsBottom = document.createElement("div");
@@ -198,6 +223,7 @@ async function appendChapters(myData) {
     images.id = "images";
     buttonsTop.appendChild(previousTop);
     buttonsTop.appendChild(nextTop);
+    buttonsTop.appendChild(select);
     buttonsTop.appendChild(removeTop);
     div1.appendChild(buttonsTop);
     for (let i=0; i < series.images.length; i++) {

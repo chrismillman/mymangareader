@@ -113,6 +113,21 @@ img {
   padding-left: 10px;
 }
 
+.select{
+  border-color: black;
+  background-color: #404040;
+  color: white;
+  height: 20px;
+  width: 300px;
+  margin-left: 134px;
+  margin-top: 9px;
+  margin-bottom: 9px;
+}
+
+.select:hover{
+  cursor: pointer;
+}
+
 .remove, .previous, .next {
   height: 35px;
   width: 35px;

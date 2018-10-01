@@ -50,8 +50,10 @@ app.get('/user/:name', urlencodedParser, function(req, res) {
 
   // Get the user_id's chapter info
   res.setHeader('Content-Type', 'application/json');
-  builder.buildView(user_id, (builtChapters) => {
-    res.status(200).send(builtChapters);
+  builder.buildView(user_id, async (builtChapters) => {
+    let userData = await store.downloadUser(user_id);
+    //let chapterNames = store.downloadSeriesNames();
+    res.status(200).send({chapters: builtChapters, userdata: userData});
   });
 });
 
@@ -87,6 +89,7 @@ app.post('/add-series/:name/:data', urlencodedParser, async function(req, res) {
   let data = req.params.data;
   store.addUserSeries(user_id, data);
   await queue.addChaptersIfNeeded([{name: data, number: 0}]);
+  queue.scrapeAllChapters(data);
   let chapterList = await store.downloadChapters([{name: data, number: 0}]);
   res.status(200).send({name: data, images: chapterList[0].images});
 });
@@ -114,5 +117,5 @@ async function startUp() {
   queue.addChaptersIfNeeded(idData);
   //store.uploadSeriesIndex("Nichijou");
   // todo - be able to grab all series from seriesIndex
-  //scraper.scrapeAllChapters("Wa");  
+  //scraper.scrapeAllChapters("Nichijou");  
 }
