@@ -6,7 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Chris Millman",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chrismillman/mymangareader.git"
+  },
   "license": "ISC",
   "dependencies": {
     "@google-cloud/datastore": "^1.4.2",
